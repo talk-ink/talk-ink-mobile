@@ -11,8 +11,23 @@ import Privacy from '@/screens/privacyPolicy/privacy';
 import Term from '@/screens/privacyPolicy/term';
 
 import AuthNavigator from './auth';
+import {useAppSelector} from '@/hooks/useAppSelector';
+import {useAppDispatch} from '@/hooks/useAppDispatch';
+import {setAuthLoading} from '@/store/features/auth';
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  Login: undefined;
+  Register: undefined;
+  Webview: undefined;
+  Splash: undefined;
+  Update: undefined;
+  Maintenance: undefined;
+  Auth: undefined;
+  Term: undefined;
+  Privacy: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const codePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
@@ -20,9 +35,13 @@ const RootNavigator = () => {
   const [loading, setLoading] = useState(true);
   const [updateAvail, setUpdateAvail] = useState(false);
 
+  const auth = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     codePush.notifyAppReady();
     checkForUpdates();
+    checkUser();
   }, []);
 
   const checkForUpdates = async () => {
@@ -52,6 +71,19 @@ const RootNavigator = () => {
     maintenance: false,
     token: false,
   };
+
+  const checkUser = async () => {
+    try {
+    } catch (error) {
+      console.log('err', error);
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => setLoading(auth.loading), 100);
+  }, [auth.loading]);
 
   return (
     <NavigationContainer theme={myTheme}>

@@ -1,7 +1,10 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
+import {authReducer} from './features/auth';
 
-const appReducer = combineReducers({});
+const appReducer = combineReducers({
+  auth: authReducer,
+});
 
 export const store = configureStore({
   reducer: appReducer,

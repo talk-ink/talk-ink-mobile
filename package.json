@@ -12,7 +12,7 @@
     "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\""
   },
   "dependencies": {
-    "@kontenbase/sdk": "^0.6.2",
+    "@kontenbase/sdk": "^0.6.3",
     "@react-native-async-storage/async-storage": "^1.15.17",
     "@react-native-firebase/analytics": "^14.3.0",
     "@react-native-firebase/app": "^14.3.0",

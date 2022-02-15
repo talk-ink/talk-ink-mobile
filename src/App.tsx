@@ -28,9 +28,9 @@ const Test = () => {
 const App = () => {
   return (
     <TailwindProvider utilities={utilities}>
-      {/* <Provider store={store}> */}
-      <NavigationsRoot />
-      {/* </Provider> */}
+      <Provider store={store}>
+        <NavigationsRoot />
+      </Provider>
     </TailwindProvider>
   );
 };

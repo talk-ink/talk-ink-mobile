@@ -25,11 +25,6 @@ const AuthNavigator = () => {
       ) : (
         <>
           <Stack.Screen
-            name="RegisterSelect"
-            component={RegisterSelect}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
             name="Login"
             component={Login}
             options={{headerShown: false}}
