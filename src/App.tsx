@@ -6,8 +6,8 @@ import utilities from '../tailwind.json';
 import {useTailwind} from 'tailwind-rn';
 import codePush from 'react-native-code-push';
 import {Provider} from 'react-redux';
-import NavigationsRoot from '@navigations/root';
-import {store} from '@store/index';
+import NavigationsRoot from '@/navigations/root';
+import {store} from '@/store/index';
 
 const Test = () => {
   const tailwind = useTailwind();
@@ -28,9 +28,9 @@ const Test = () => {
 const App = () => {
   return (
     <TailwindProvider utilities={utilities}>
-      <Provider store={store}>
-        <NavigationsRoot />
-      </Provider>
+      {/* <Provider store={store}> */}
+      <NavigationsRoot />
+      {/* </Provider> */}
     </TailwindProvider>
   );
 };

@@ -1,16 +1,9 @@
 import React from 'react';
 
-import Layout from '@components/layouts';
-import RegisterForm from '@components/organisms/register';
+import {Text} from 'react-native';
 
-const Register = ({navigation, route}) => {
-  const {type} = route.params || {};
-
-  return (
-    <Layout scrollable>
-      <RegisterForm type={type} navigation={navigation} />
-    </Layout>
-  );
+const Register = ({navigation}) => {
+  return <Text>Register</Text>;
 };
 
 export default Register;

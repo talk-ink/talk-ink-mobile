@@ -1,14 +1,9 @@
 import React from 'react';
 
-import Layout from '@components/layouts';
-import LoginForm from '@components/organisms/login';
+import {Text} from 'react-native';
 
 const Login = ({navigation}) => {
-  return (
-    <Layout scrollable>
-      <LoginForm navigation={navigation} />
-    </Layout>
-  );
+  return <Text>Login</Text>;
 };
 
 export default Login;
