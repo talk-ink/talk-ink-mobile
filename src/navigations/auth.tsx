@@ -35,6 +35,11 @@ const AuthNavigator = () => {
             component={Register}
             options={{headerShown: false}}
           />
+          <Stack.Screen
+            name="Webview"
+            component={Webview}
+            options={{headerShown: false}}
+          />
         </>
       )}
     </Stack.Navigator>

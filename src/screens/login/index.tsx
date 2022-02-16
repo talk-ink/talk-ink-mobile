@@ -1,18 +1,13 @@
 import React, {useState} from 'react';
 
-import {Button, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import type {StackNavigationProp} from '@react-navigation/stack';
+import {Text, View} from 'react-native';
+import type {StackScreenProps} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Form, useFormik} from 'formik';
-import {useTailwind} from 'tailwind-rn/dist';
+import {useFormik} from 'formik';
 import {loginValidation} from '@/utils/validators';
 import {Login} from '@/types';
 import {RootStackParamList} from '@/navigations/root';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {kontenbase} from '@/utils/customClient';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
 import {setAuthToken, setAuthUser} from '@/store/features/auth';
@@ -23,17 +18,16 @@ import FormLabel from '@/components/Form/FormLabel';
 import FormError from '@/components/Form/FormError';
 import BigButton from '@/components/Form/Button/BigButton';
 import colors from '@/utils/themes/colors';
+import OneSignal from 'react-native-onesignal';
 
 const initialValues: Login = {
   email: '',
   password: '',
 };
 
-type TProps = StackNavigationProp<RootStackParamList, 'Login'>;
+type TProps = StackScreenProps<RootStackParamList, 'Login'>;
 
-const LoginPage = ({navigate}: TProps) => {
-  const tailwind = useTailwind();
-
+const LoginPage = ({navigation}: TProps) => {
   const dispatch = useAppDispatch();
 
   const [apiLoading, setApiLoading] = useState<boolean>(false);
@@ -44,10 +38,14 @@ const LoginPage = ({navigate}: TProps) => {
     try {
       console.log(values);
       const {user, error, token} = await kontenbase.auth.login(values);
+      console.log(token, user?.id);
       if (error) throw new Error(error.message);
       AsyncStorage.setItem('token', token);
+      OneSignal.setExternalUserId(user?.id);
+
       dispatch(setAuthToken({token}));
       dispatch(setAuthUser(user));
+      navigation.navigate('Webview', {token});
     } catch (error) {
       console.log('err', error);
     } finally {
@@ -109,7 +107,13 @@ const LoginPage = ({navigate}: TProps) => {
         <FormControl style={{marginTop: 20}}>
           <FormLabel style={{alignSelf: 'center'}}>
             Don't have an account?{' '}
-            <Text style={{color: colors.primary}}>Sign Up</Text>
+            <Text
+              style={{color: colors.primary}}
+              onPress={() => {
+                navigation?.navigate('Register');
+              }}>
+              Sign Up
+            </Text>
           </FormLabel>
         </FormControl>
       </View>

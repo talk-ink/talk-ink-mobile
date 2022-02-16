@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Text} from 'react-native';
 
-const Register = ({navigation}) => {
+const Register = ({}) => {
   return <Text>Register</Text>;
 };
 

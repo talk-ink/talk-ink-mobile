@@ -7,12 +7,13 @@ import {StackActions} from '@react-navigation/routers';
 
 import Layout from '@/components/Layout/index';
 import {FRONTEND_URL} from 'react-native-dotenv';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {RootStackParamList} from '@/navigations/root';
 
-type TProps = StackNavigationProp<RootStackParamList, 'Login'>;
+type TProps = StackScreenProps<RootStackParamList, 'Webview'>;
 
-const Webview = ({navigate, goBack}: TProps) => {
+const Webview = ({navigation, route}: TProps) => {
+  const {token} = route.params;
   const webview = useRef(null);
 
   const [canGoBack, setCanGoBack] = useState(true);
@@ -22,7 +23,7 @@ const Webview = ({navigate, goBack}: TProps) => {
       if (canGoBack) {
         webview.current.goBack();
       } else {
-        goBack();
+        navigation.goBack();
       }
       return true; // prevent default behavior (exit app)
     }
@@ -30,6 +31,7 @@ const Webview = ({navigate, goBack}: TProps) => {
   };
 
   useEffect(() => {
+    console.log('token', token);
     BackHandler.addEventListener('hardwareBackPress', onAndroidBackPress);
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', onAndroidBackPress);
