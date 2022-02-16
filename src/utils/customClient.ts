@@ -71,6 +71,10 @@ const customClient = (options: KontenbaseClientOptions) => {
   };
 };
 
+export const axiosClient = axios.create({
+  baseURL: `https://api.kontenbase.com/query/api/v1/${apiKey}`,
+});
+
 export const kontenbase = customClient({apiKey});
 
 export {};

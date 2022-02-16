@@ -5,23 +5,47 @@ import {useTailwind} from 'tailwind-rn/dist';
 import {ScrollView} from 'react-native-gesture-handler';
 import Layout from '../index';
 import images from '@/assets/images';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import colors from '@/utils/themes/colors';
+import fonts from '@/assets/fonts';
 
 type Props = {
   children?: React.ReactNode;
+  title?: string;
 };
 
-const LoginRegisterLayout = ({children}: Props) => {
-  const tailwind = useTailwind();
+const LoginRegisterLayout = ({children, title}: Props) => {
   return (
-    <Layout>
-      <View style={tailwind('justify-center')}>
-        <Image
-          source={images.brand}
-          style={{...tailwind('w-6/12'), resizeMode: 'contain'}}
-        />
-      </View>
-      <View style={{height: '100%', backgroundColor: 'red'}}>
-        <View>{children}</View>
+    <Layout scrollable>
+      <View style={{marginHorizontal: wp('10%'), marginTop: hp('2%')}}>
+        <View>
+          <Image
+            source={images.brand}
+            style={{
+              width: wp('40%'),
+              resizeMode: 'contain',
+              alignSelf: 'center',
+            }}
+          />
+        </View>
+        <View>
+          <Text
+            style={{
+              color: '#312e81',
+              fontFamily: fonts.semiBold600,
+              fontSize: wp('8%'),
+              textAlign: 'center',
+              marginTop: hp('3%'),
+            }}>
+            {title}
+          </Text>
+        </View>
+        <View>
+          <View>{children}</View>
+        </View>
       </View>
     </Layout>
   );

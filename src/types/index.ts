@@ -150,3 +150,9 @@ export type PageStatus =
   | 'channel-notFound'
   | null
   | undefined;
+
+export type AppConfig = {
+  enableCheckPlaystore: boolean;
+  playstoreLink: string;
+  maintenance: boolean;
+};

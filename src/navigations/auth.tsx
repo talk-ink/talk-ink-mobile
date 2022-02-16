@@ -26,11 +26,6 @@ const AuthNavigator = () => {
       ) : (
         <>
           <Stack.Screen
-            name="Webiew"
-            component={Webview}
-            options={{headerShown: false}}
-          />
-          {/* <Stack.Screen
             name="Login"
             component={Login}
             options={{headerShown: false}}
@@ -39,7 +34,7 @@ const AuthNavigator = () => {
             name="Register"
             component={Register}
             options={{headerShown: false}}
-          /> */}
+          />
         </>
       )}
     </Stack.Navigator>

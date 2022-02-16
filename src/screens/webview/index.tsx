@@ -48,28 +48,6 @@ const Webview = ({navigate, goBack}: TProps) => {
         }}
         domStorageEnabled
       />
-      {/* <FAB
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          margin: 16,
-          backgroundColor: colors.PRIMARY,
-        }}
-        icon={() => (
-          <Image
-            source={icons.arrowBackLight}
-            style={{
-              height: 20,
-              width: 20,
-            }}
-            resizeMode="contain"
-          />
-        )}
-        onPress={() => {
-          navigation.dispatch(StackActions.pop(1));
-        }}
-      /> */}
     </Layout>
   );
 };

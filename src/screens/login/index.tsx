@@ -9,11 +9,20 @@ import {useTailwind} from 'tailwind-rn/dist';
 import {loginValidation} from '@/utils/validators';
 import {Login} from '@/types';
 import {RootStackParamList} from '@/navigations/root';
-import {TextInput} from 'react-native-gesture-handler';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import {kontenbase} from '@/utils/customClient';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
 import {setAuthToken, setAuthUser} from '@/store/features/auth';
 import Layout from '@/components/Layout/LoginRegister/index';
+import TextInput from '@/components/TextInput';
+import FormControl from '@/components/Form/FormControl';
+import FormLabel from '@/components/Form/FormLabel';
+import FormError from '@/components/Form/FormError';
+import BigButton from '@/components/Form/Button/BigButton';
+import colors from '@/utils/themes/colors';
 
 const initialValues: Login = {
   email: '',
@@ -62,28 +71,47 @@ const LoginPage = ({navigate}: TProps) => {
     apiLoading;
 
   return (
-    <Layout>
-      <View style={tailwind('bg-white h-full')}>
-        <TextInput
-          placeholder="Email"
-          style={tailwind('w-full border-b border-b-indigo-500 text-slate-800')}
-          value={formik.values.email}
-          onChangeText={formik.handleChange('email')}
-          onBlur={formik.handleBlur('email')}
-        />
-        <TextInput
-          placeholder="Password"
-          style={tailwind('w-full border-b border-b-indigo-500 text-slate-800')}
-          value={formik.values.password}
-          onChangeText={formik.handleChange('password')}
-          onBlur={formik.handleBlur('password')}
-          secureTextEntry
-        />
-        <Button
-          title="Login"
-          onPress={formik.handleSubmit}
-          disabled={isDisabled}
-        />
+    <Layout title="Login">
+      <View style={{marginTop: hp('5%')}}>
+        <FormControl>
+          <FormLabel>Email Address</FormLabel>
+          <TextInput
+            value={formik.values.email}
+            onChangeText={formik.handleChange('email')}
+            onBlur={formik.handleBlur('email')}
+            placeholder="Enter your email"
+          />
+          {formik.errors.email && formik.touched.email && (
+            <FormError>{formik.errors.email}</FormError>
+          )}
+        </FormControl>
+        <FormControl>
+          <FormLabel>Password</FormLabel>
+          <TextInput
+            value={formik.values.password}
+            onChangeText={formik.handleChange('password')}
+            onBlur={formik.handleBlur('password')}
+            secureTextEntry
+            placeholder="Enter your password"
+          />
+          {formik.errors.password && formik.touched.password && (
+            <FormError>{formik.errors.password}</FormError>
+          )}
+        </FormControl>
+        <FormControl style={{marginTop: 20}}>
+          <BigButton
+            title="Login"
+            onPress={formik.handleSubmit}
+            disabled={isDisabled}
+            loading={apiLoading}
+          />
+        </FormControl>
+        <FormControl style={{marginTop: 20}}>
+          <FormLabel style={{alignSelf: 'center'}}>
+            Don't have an account?{' '}
+            <Text style={{color: colors.primary}}>Sign Up</Text>
+          </FormLabel>
+        </FormControl>
       </View>
     </Layout>
   );
