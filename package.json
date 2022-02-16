@@ -35,6 +35,7 @@
     "react-native-device-info": "^8.4.8",
     "react-native-dotenv": "^3.3.1",
     "react-native-gesture-handler": "^2.2.0",
+    "react-native-onesignal": "^4.3.7",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.11.1",

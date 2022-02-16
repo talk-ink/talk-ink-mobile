@@ -46,6 +46,7 @@ const Webview = ({navigate, goBack}: TProps) => {
         source={{
           uri: `${FRONTEND_URL}?webview=true`,
         }}
+        domStorageEnabled
       />
       {/* <FAB
         style={{
