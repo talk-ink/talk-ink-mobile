@@ -82,7 +82,7 @@ const RootNavigator = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => setLoading(auth.loading), 100);
+    setTimeout(() => setLoading(auth.loading), 2000);
   }, [auth.loading]);
 
   return (

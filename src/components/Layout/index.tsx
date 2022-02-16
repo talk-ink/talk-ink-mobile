@@ -1,23 +1,62 @@
-import {View, Text, StatusBar} from 'react-native';
-import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTailwind} from 'tailwind-rn/dist';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, {useEffect} from 'react';
 
-type Props = {
-  children?: React.ReactNode;
+import {
+  ScrollView,
+  RefreshControl,
+  AppState,
+  StatusBar,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import PropTypes from 'prop-types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+type TProps = {
+  children: React.ReactNode;
+  style?: ViewStyle;
+  scrollable?: boolean;
+  withRefreshControl?: boolean;
+  refreshing?: boolean;
+  onRefresh?: () => any;
 };
 
-const Layout = ({children}: Props) => {
-  const tailwind = useTailwind();
+const Layout = ({
+  children,
+  style,
+  scrollable,
+  withRefreshControl,
+  refreshing,
+  onRefresh,
+}: TProps) => {
   return (
-    <SafeAreaView style={tailwind('bg-white ')}>
-      <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="always">
-        {children}
-      </ScrollView>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        ...style,
+        backgroundColor: '#fff',
+      }}>
+      <StatusBar barStyle={'dark-content'} backgroundColor="#fff" translucent />
+      {scrollable ? (
+        withRefreshControl ? (
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="always">
+            {children}
+          </ScrollView>
+        ) : (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="always">
+            {children}
+          </ScrollView>
+        )
+      ) : (
+        children
+      )}
     </SafeAreaView>
   );
 };
