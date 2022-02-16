@@ -1,90 +1,70 @@
-.table {
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.flex{
+  display: flex
+}
+
+.table{
   display: table
 }
 
-.h-full {
+.h-full{
   height: 100%
 }
 
-.w-full {
+.w-full{
   width: 100%
 }
 
-.items-center {
-  align-items: center
+.w-10\/12{
+  width: 83.333333%
 }
 
-.rounded-full {
-  border-radius: 9999px
+.w-52{
+  width: 13rem
 }
 
-.border {
+.w-10{
+  width: 2.5rem
+}
+
+.w-6\/12{
+  width: 50%
+}
+
+.justify-center{
+  justify-content: center
+}
+
+.border{
   border-width: 1px
 }
 
-.border-b {
+.border-b{
   border-bottom-width: 1px
 }
 
-.border-b-indigo-500 {
+.border-b-indigo-500{
   --tw-border-opacity: 1;
   border-bottom-color: rgb(99 102 241 / var(--tw-border-opacity))
 }
 
-.bg-blue-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(219 234 254 / var(--tw-bg-opacity))
-}
-
-.bg-blue-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(191 219 254 / var(--tw-bg-opacity))
-}
-
-.bg-white {
+.bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
-.bg-red-300 {
+.bg-red-300{
   --tw-bg-opacity: 1;
   background-color: rgb(252 165 165 / var(--tw-bg-opacity))
 }
 
-.bg-indigo-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(99 102 241 / var(--tw-bg-opacity))
+.px-12{
+  padding-left: 3rem;
+  padding-right: 3rem
 }
 
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem
-}
-
-.pt-12 {
-  padding-top: 3rem
-}
-
-.font-semibold {
-  font-weight: 600
-}
-
-.text-blue-800 {
-  --tw-text-opacity: 1;
-  color: rgb(30 64 175 / var(--tw-text-opacity))
-}
-
-.text-slate-800 {
+.text-slate-800{
   --tw-text-opacity: 1;
   color: rgb(30 41 59 / var(--tw-text-opacity))
-}
-
-.active\:border-b-indigo-500:active {
-  --tw-border-opacity: 1;
-  border-bottom-color: rgb(99 102 241 / var(--tw-border-opacity))
 }

@@ -13,6 +13,7 @@ import {TextInput} from 'react-native-gesture-handler';
 import {kontenbase} from '@/utils/customClient';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
 import {setAuthToken, setAuthUser} from '@/store/features/auth';
+import Layout from '@/components/Layout/LoginRegister/index';
 
 const initialValues: Login = {
   email: '',
@@ -61,7 +62,7 @@ const LoginPage = ({navigate}: TProps) => {
     apiLoading;
 
   return (
-    <SafeAreaView>
+    <Layout>
       <View style={tailwind('bg-white h-full')}>
         <TextInput
           placeholder="Email"
@@ -84,7 +85,7 @@ const LoginPage = ({navigate}: TProps) => {
           disabled={isDisabled}
         />
       </View>
-    </SafeAreaView>
+    </Layout>
   );
 };
 
