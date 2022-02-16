@@ -13,7 +13,7 @@ import {RootStackParamList} from '@/navigations/root';
 type TProps = StackScreenProps<RootStackParamList, 'Webview'>;
 
 const Webview = ({navigation, route}: TProps) => {
-  const {token} = route.params;
+  const {token, urlPath} = route.params;
   const webview = useRef(null);
 
   const [canGoBack, setCanGoBack] = useState(true);
@@ -23,7 +23,11 @@ const Webview = ({navigation, route}: TProps) => {
       if (canGoBack) {
         webview.current.goBack();
       } else {
-        navigation.goBack();
+        if (navigation.canGoBack()) {
+          navigation.goBack();
+        } else {
+          BackHandler.exitApp();
+        }
       }
       return true; // prevent default behavior (exit app)
     }
@@ -31,7 +35,7 @@ const Webview = ({navigation, route}: TProps) => {
   };
 
   useEffect(() => {
-    console.log('token', token);
+    console.log('token', `${FRONTEND_URL}${urlPath}?token=${token}`);
     BackHandler.addEventListener('hardwareBackPress', onAndroidBackPress);
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', onAndroidBackPress);
@@ -46,7 +50,7 @@ const Webview = ({navigation, route}: TProps) => {
           setCanGoBack(e.nativeEvent.canGoBack);
         }}
         source={{
-          uri: `${FRONTEND_URL}?webview=true`,
+          uri: `${FRONTEND_URL}${urlPath}?token=${token}`,
         }}
         domStorageEnabled
       />

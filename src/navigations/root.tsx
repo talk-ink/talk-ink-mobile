@@ -18,7 +18,7 @@ import {setAuthLoading} from '@/store/features/auth';
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
-  Webview: {token: string};
+  Webview: {token: string; urlPath?: string};
   Splash: undefined;
   Update: undefined;
   Maintenance: undefined;

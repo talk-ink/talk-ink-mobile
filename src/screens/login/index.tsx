@@ -38,14 +38,14 @@ const LoginPage = ({navigation}: TProps) => {
     try {
       console.log(values);
       const {user, error, token} = await kontenbase.auth.login(values);
-      console.log(token, user?.id);
+
       if (error) throw new Error(error.message);
       AsyncStorage.setItem('token', token);
       OneSignal.setExternalUserId(user?._id);
 
       dispatch(setAuthToken({token}));
       dispatch(setAuthUser(user));
-      navigation.navigate('Webview', {token});
+      navigation.replace('Webview', {token, urlPath: '/webview'});
     } catch (error) {
       console.log('err', error);
     } finally {

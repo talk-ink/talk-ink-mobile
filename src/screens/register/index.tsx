@@ -45,7 +45,7 @@ const RegisterPage = ({navigation}: TProps) => {
       console.log(user, token);
       dispatch(setAuthToken({token}));
       dispatch(setAuthUser(user));
-      // navigation.navigate('Webview', {token});
+      navigation.replace('Webview', {token});
     } catch (error) {
       console.log('err', error);
     } finally {
