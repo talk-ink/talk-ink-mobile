@@ -15,7 +15,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "typeRoots": ["./src/types"]
   },
   "exclude": [
     "node_modules",

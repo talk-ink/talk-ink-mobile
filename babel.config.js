@@ -12,6 +12,13 @@ plugins.push([
   },
 ]);
 
+plugins.push([
+  'module:react-native-dotenv',
+  {
+    moduleName: 'react-native-dotenv',
+  },
+]);
+
 module.exports = {
   presets,
   plugins,
