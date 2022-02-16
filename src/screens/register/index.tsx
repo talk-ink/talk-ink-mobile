@@ -4,8 +4,8 @@ import {Text, View} from 'react-native';
 import type {StackScreenProps} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFormik} from 'formik';
-import {loginValidation} from '@/utils/validators';
-import {Login} from '@/types';
+import {loginValidation, registerValidation} from '@/utils/validators';
+import {Login, Register} from '@/types';
 import {RootStackParamList} from '@/navigations/root';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {kontenbase} from '@/utils/customClient';
@@ -20,32 +20,32 @@ import BigButton from '@/components/Form/Button/BigButton';
 import colors from '@/utils/themes/colors';
 import OneSignal from 'react-native-onesignal';
 
-const initialValues: Login = {
+const initialValues: Register = {
+  firstName: '',
   email: '',
   password: '',
 };
 
-type TProps = StackScreenProps<RootStackParamList, 'Login'>;
+type TProps = StackScreenProps<RootStackParamList, 'Register'>;
 
-const LoginPage = ({navigation}: TProps) => {
+const RegisterPage = ({navigation}: TProps) => {
   const dispatch = useAppDispatch();
 
   const [apiLoading, setApiLoading] = useState<boolean>(false);
 
-  const onSubmit = async (values: Login) => {
+  const onSubmit = async (values: Register) => {
     setApiLoading(true);
-
     try {
       console.log(values);
-      const {user, error, token} = await kontenbase.auth.login(values);
-      console.log(token, user?.id);
+      const {user, error, token} = await kontenbase.auth.register(values);
+
       if (error) throw new Error(error.message);
       AsyncStorage.setItem('token', token);
       OneSignal.setExternalUserId(user?._id);
-
+      console.log(user, token);
       dispatch(setAuthToken({token}));
       dispatch(setAuthUser(user));
-      navigation.navigate('Webview', {token});
+      // navigation.navigate('Webview', {token});
     } catch (error) {
       console.log('err', error);
     } finally {
@@ -55,7 +55,7 @@ const LoginPage = ({navigation}: TProps) => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema: loginValidation,
+    validationSchema: registerValidation,
     onSubmit: values => {
       onSubmit(values);
     },
@@ -63,14 +63,27 @@ const LoginPage = ({navigation}: TProps) => {
 
   const isDisabled: boolean =
     !formik.values.email ||
+    !formik.values.firstName ||
     !formik.values.password ||
     !!formik.errors.email ||
+    !!formik.errors.firstName ||
     !!formik.errors.password ||
     apiLoading;
-
   return (
-    <Layout title="Login">
+    <Layout title="Register">
       <View style={{marginTop: hp('5%')}}>
+        <FormControl>
+          <FormLabel>Full Name</FormLabel>
+          <TextInput
+            value={formik.values.firstName}
+            onChangeText={formik.handleChange('firstName')}
+            onBlur={formik.handleBlur('firstName')}
+            placeholder="Enter your full name"
+          />
+          {formik.errors.firstName && formik.touched.firstName && (
+            <FormError>{formik.errors.firstName}</FormError>
+          )}
+        </FormControl>
         <FormControl>
           <FormLabel>Email Address</FormLabel>
           <TextInput
@@ -98,7 +111,7 @@ const LoginPage = ({navigation}: TProps) => {
         </FormControl>
         <FormControl style={{marginTop: 20}}>
           <BigButton
-            title="Log In"
+            title="Sign Up"
             onPress={formik.handleSubmit}
             disabled={isDisabled}
             loading={apiLoading}
@@ -106,13 +119,13 @@ const LoginPage = ({navigation}: TProps) => {
         </FormControl>
         <FormControl style={{marginTop: 20}}>
           <FormLabel style={{alignSelf: 'center'}}>
-            Don't have an account?{' '}
+            Already have account?{' '}
             <Text
               style={{color: colors.primary}}
               onPress={() => {
-                navigation?.navigate('Register');
+                navigation?.navigate('Login');
               }}>
-              Sign Up
+              Log In
             </Text>
           </FormLabel>
         </FormControl>
@@ -121,4 +134,4 @@ const LoginPage = ({navigation}: TProps) => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

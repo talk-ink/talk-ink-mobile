@@ -103,6 +103,7 @@ export interface Login {
 }
 
 export interface Register {
+  _id?: string;
   firstName: string;
   email: string;
   password: string;

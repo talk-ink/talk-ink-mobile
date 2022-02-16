@@ -57,8 +57,32 @@ const authClient = (url: string) => {
     });
   };
 
+  const register = async <T = any>(
+    body: Partial<T>,
+  ): Promise<AuthResponse<T>> => {
+    return new Promise(async (resolve, _reject) => {
+      try {
+        const {data, status, statusText} = await axios.post<TokenResponse<T>>(
+          `${url}/auth/register`,
+          body,
+        );
+
+        const user = data.user;
+        resolve({
+          user,
+          status,
+          statusText,
+          token: data.token,
+        });
+      } catch (error) {
+        resolve(_error(error));
+      }
+    });
+  };
+
   return {
     login,
+    register,
   };
 };
 
