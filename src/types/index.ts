@@ -5,6 +5,7 @@ export interface Token {
 export interface AuthState extends Token {
   user: User | null;
   loading: boolean;
+  deeplink?: string;
 }
 
 export interface ISubComment {

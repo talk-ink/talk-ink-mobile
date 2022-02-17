@@ -29,6 +29,12 @@ const Webview = ({navigation, route}: TProps) => {
     if (!token && auth.token) return auth.token;
   }, [token, auth.token]);
 
+  const goToAbsolutePath: string | null = useMemo(() => {
+    if (absolutePath) return absolutePath;
+    if (!absolutePath && auth.deeplink !== '/webview') return auth.deeplink;
+    return null;
+  }, [absolutePath, auth.deeplink]);
+
   const onAndroidBackPress = () => {
     if (webview.current) {
       if (canGoBack) {
@@ -46,10 +52,6 @@ const Webview = ({navigation, route}: TProps) => {
   };
 
   useEffect(() => {
-    console.log(
-      'token',
-      `${FRONTEND_URL}${urlPath ?? '/webview'}?token=${usedToken}`,
-    );
     BackHandler.addEventListener('hardwareBackPress', onAndroidBackPress);
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', onAndroidBackPress);
@@ -64,6 +66,16 @@ const Webview = ({navigation, route}: TProps) => {
     }
   };
 
+  useEffect(() => {
+    console.log(
+      `${FRONTEND_URL}${urlPath ?? '/webview'}?token=${usedToken}${
+        goToAbsolutePath
+          ? `&absolutePath=${encodeURIComponent(goToAbsolutePath)}`
+          : ''
+      }`,
+    );
+  }, [urlPath, usedToken, goToAbsolutePath]);
+
   return (
     <Layout>
       <WebView
@@ -73,8 +85,8 @@ const Webview = ({navigation, route}: TProps) => {
         }}
         source={{
           uri: `${FRONTEND_URL}${urlPath ?? '/webview'}?token=${usedToken}${
-            absolutePath
-              ? `&absolutePath=${encodeURIComponent(absolutePath)}`
+            goToAbsolutePath
+              ? `&absolutePath=${encodeURIComponent(goToAbsolutePath)}`
               : ''
           }`,
         }}

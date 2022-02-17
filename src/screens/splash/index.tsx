@@ -1,6 +1,6 @@
 import images from '@/assets/images';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
-import {setAuthLoading, setAuthToken} from '@/store/features/auth';
+import {setAuthLoading, setAuthToken, setDeeplink} from '@/store/features/auth';
 import {AppConfig} from '@/types';
 import {getAuthToken} from '@/utils/auth';
 import {axiosClient} from '@/utils/customClient';
@@ -8,6 +8,7 @@ import React, {useEffect, useState} from 'react';
 
 import {Image, Linking, Text, View} from 'react-native';
 import codePush from 'react-native-code-push';
+import {FRONTEND_URL} from 'react-native-dotenv';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTailwind} from 'tailwind-rn/dist';
 
@@ -38,11 +39,19 @@ const useInitialURL = () => {
 const Splash = () => {
   const tailwind = useTailwind();
   const dispatch = useAppDispatch();
-  const {url: initialUrl, processing} = useInitialURL();
+  const {url: initialUrl, processing}: {url: string; processing: boolean} =
+    useInitialURL();
 
   const checkToken = async () => {
     try {
       const token = await getAuthToken();
+      if (initialUrl) {
+        const manipulateUrl = initialUrl.replace(
+          'http://localhost:3000',
+          FRONTEND_URL,
+        );
+        dispatch(setDeeplink(manipulateUrl.split(FRONTEND_URL)[1]));
+      }
       if (token) {
         dispatch(setAuthToken({token}));
       }
@@ -54,11 +63,9 @@ const Splash = () => {
   };
 
   useEffect(() => {
-    checkToken();
-  }, []);
-
-  useEffect(() => {
-    // dispatch(setAuthLoading(!processing));
+    if (!processing) {
+      checkToken();
+    }
   }, [processing]);
 
   return (

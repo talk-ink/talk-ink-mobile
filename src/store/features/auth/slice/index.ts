@@ -6,6 +6,7 @@ const initialState: AuthState = {
   token: null,
   user: null,
   loading: true,
+  deeplink: '/webview',
 };
 
 const authSlice = createSlice({
@@ -53,6 +54,9 @@ const authSlice = createSlice({
         ...action.payload,
       };
     },
+    setDeeplink: (state, action: PayloadAction<string>) => {
+      state.deeplink = action.payload;
+    },
   },
 });
 
@@ -63,5 +67,6 @@ export const {
   logout,
   login,
   updateUser,
+  setDeeplink,
 } = authSlice.actions;
 export const authReducer = authSlice.reducer;
