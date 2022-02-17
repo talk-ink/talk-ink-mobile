@@ -18,7 +18,7 @@ import {setAuthLoading} from '@/store/features/auth';
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
-  Webview: {token: string; urlPath?: string};
+  Webview: {token: string; urlPath?: string; absolutePath?: string};
   Splash: undefined;
   Update: undefined;
   Maintenance: undefined;
@@ -41,7 +41,6 @@ const RootNavigator = () => {
   useEffect(() => {
     codePush.notifyAppReady();
     checkForUpdates();
-    checkUser();
   }, []);
 
   const checkForUpdates = async () => {
@@ -70,15 +69,6 @@ const RootNavigator = () => {
   const state = {
     maintenance: false,
     token: false,
-  };
-
-  const checkUser = async () => {
-    try {
-    } catch (error) {
-      console.log('err', error);
-    } finally {
-      dispatch(setAuthLoading(false));
-    }
   };
 
   useEffect(() => {

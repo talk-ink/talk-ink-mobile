@@ -42,10 +42,10 @@ const RegisterPage = ({navigation}: TProps) => {
       if (error) throw new Error(error.message);
       AsyncStorage.setItem('token', token);
       OneSignal.setExternalUserId(user?._id);
-      console.log(user, token);
+
       dispatch(setAuthToken({token}));
       dispatch(setAuthUser(user));
-      navigation.replace('Webview', {token});
+      navigation.replace('Webview', {token, urlPath: '/webview'});
     } catch (error) {
       console.log('err', error);
     } finally {

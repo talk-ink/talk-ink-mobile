@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 
 import {BackHandler, Image} from 'react-native';
-import {WebView} from 'react-native-webview';
+import {WebView, WebViewMessageEvent} from 'react-native-webview';
 
 import {StackActions} from '@react-navigation/routers';
 
@@ -13,7 +13,7 @@ import {RootStackParamList} from '@/navigations/root';
 type TProps = StackScreenProps<RootStackParamList, 'Webview'>;
 
 const Webview = ({navigation, route}: TProps) => {
-  const {token, urlPath} = route.params;
+  const {token, urlPath, absolutePath} = route.params;
   const webview = useRef(null);
 
   const [canGoBack, setCanGoBack] = useState(true);
@@ -42,6 +42,13 @@ const Webview = ({navigation, route}: TProps) => {
     };
   }, [canGoBack]);
 
+  const onMessageHandler = (event: WebViewMessageEvent) => {
+    const parseData: {action: 'logout'} = JSON.parse(event.nativeEvent.data);
+    if (parseData?.action === 'logout') {
+      navigation.navigate('Login');
+    }
+  };
+
   return (
     <Layout>
       <WebView
@@ -50,9 +57,14 @@ const Webview = ({navigation, route}: TProps) => {
           setCanGoBack(e.nativeEvent.canGoBack);
         }}
         source={{
-          uri: `${FRONTEND_URL}${urlPath}?token=${token}`,
+          uri: `${FRONTEND_URL}${urlPath}?token=${token}${
+            absolutePath
+              ? `&absolutePath=${encodeURIComponent(absolutePath)}`
+              : ''
+          }`,
         }}
         domStorageEnabled
+        onMessage={onMessageHandler}
       />
     </Layout>
   );

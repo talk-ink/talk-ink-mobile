@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {Text, View} from 'react-native';
+import {Linking, Text, View} from 'react-native';
 import type {StackScreenProps} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFormik} from 'formik';
