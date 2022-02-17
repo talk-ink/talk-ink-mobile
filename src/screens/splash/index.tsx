@@ -1,7 +1,8 @@
 import images from '@/assets/images';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
-import {setAuthLoading} from '@/store/features/auth';
+import {setAuthLoading, setAuthToken} from '@/store/features/auth';
 import {AppConfig} from '@/types';
+import {getAuthToken} from '@/utils/auth';
 import {axiosClient} from '@/utils/customClient';
 import React, {useEffect, useState} from 'react';
 
@@ -39,8 +40,12 @@ const Splash = () => {
   const dispatch = useAppDispatch();
   const {url: initialUrl, processing} = useInitialURL();
 
-  const checkUser = async () => {
+  const checkToken = async () => {
     try {
+      const token = await getAuthToken();
+      if (token) {
+        dispatch(setAuthToken({token}));
+      }
     } catch (error) {
       console.log('err', error);
     } finally {
@@ -49,7 +54,7 @@ const Splash = () => {
   };
 
   useEffect(() => {
-    checkUser();
+    checkToken();
   }, []);
 
   useEffect(() => {
