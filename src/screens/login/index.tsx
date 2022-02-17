@@ -19,6 +19,7 @@ import FormError from '@/components/Form/FormError';
 import BigButton from '@/components/Form/Button/BigButton';
 import colors from '@/utils/themes/colors';
 import OneSignal from 'react-native-onesignal';
+import {useAppSelector} from '@/hooks/useAppSelector';
 
 const initialValues: Login = {
   email: '',
@@ -31,6 +32,7 @@ const LoginPage = ({navigation}: TProps) => {
   const dispatch = useAppDispatch();
 
   const [apiLoading, setApiLoading] = useState<boolean>(false);
+  const auth = useAppSelector(state => state.auth);
 
   const onSubmit = async (values: Login) => {
     setApiLoading(true);
@@ -45,7 +47,12 @@ const LoginPage = ({navigation}: TProps) => {
 
       dispatch(setAuthToken({token}));
       dispatch(setAuthUser(user));
-      navigation.replace('Webview', {token, urlPath: '/webview'});
+
+      navigation.replace('Webview', {
+        token,
+        urlPath: '/webview',
+        absolutePath: auth.deeplink !== '/webview' ? auth.deeplink : undefined,
+      });
     } catch (error) {
       console.log('err', error);
     } finally {

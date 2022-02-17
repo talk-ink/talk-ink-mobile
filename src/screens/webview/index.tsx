@@ -12,7 +12,7 @@ import {RootStackParamList} from '@/navigations/root';
 import {removeAuthToken} from '@/utils/auth';
 import {useAppSelector} from '@/hooks/useAppSelector';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
-import {setAuthToken} from '@/store/features/auth';
+import {setAuthToken, setDeeplink} from '@/store/features/auth';
 import OneSignal from 'react-native-onesignal';
 
 type TProps = StackScreenProps<RootStackParamList, 'Webview'>;
@@ -66,6 +66,7 @@ const Webview = ({navigation, route}: TProps) => {
     if (parseData?.action === 'logout') {
       removeAuthToken();
       OneSignal.removeExternalUserId();
+      dispatch(setDeeplink('/webview'));
       dispatch(setAuthToken({token: null}));
     }
   };

@@ -46,10 +46,18 @@ const Splash = () => {
     try {
       const token = await getAuthToken();
       if (initialUrl) {
-        const manipulateUrl = initialUrl.replace(
+        const isLocalhost: boolean = !initialUrl.split(
           'http://localhost:3000',
-          FRONTEND_URL,
-        );
+        )?.[0];
+        let manipulateUrl: string = initialUrl;
+
+        if (isLocalhost) {
+          manipulateUrl = initialUrl.replace(
+            'http://localhost:3000',
+            FRONTEND_URL,
+          );
+        }
+        console.log(manipulateUrl, isLocalhost);
         dispatch(setDeeplink(manipulateUrl.split(FRONTEND_URL)[1]));
       }
       if (token) {
