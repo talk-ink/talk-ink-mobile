@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef, useMemo} from 'react';
 
-import {BackHandler, Image} from 'react-native';
+import {BackHandler, Image, Linking} from 'react-native';
 import {WebView, WebViewMessageEvent} from 'react-native-webview';
 
 import {StackActions} from '@react-navigation/routers';
@@ -14,6 +14,7 @@ import {useAppSelector} from '@/hooks/useAppSelector';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
 import {setAuthToken, setDeeplink} from '@/store/features/auth';
 import OneSignal from 'react-native-onesignal';
+import {getDeeplinkPath} from '@/utils/helper';
 
 type TProps = StackScreenProps<RootStackParamList, 'Webview'>;
 
@@ -22,6 +23,7 @@ const Webview = ({navigation, route}: TProps) => {
   const webview = useRef(null);
 
   const [canGoBack, setCanGoBack] = useState(true);
+  const [webviewUrl, setWebviewUrl] = useState<string>('');
   const auth = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
@@ -72,6 +74,8 @@ const Webview = ({navigation, route}: TProps) => {
   };
 
   useEffect(() => {
+    if (!usedToken) return;
+
     console.log(
       `${FRONTEND_URL}${urlPath ?? '/webview'}?token=${usedToken}${
         goToAbsolutePath
@@ -79,7 +83,32 @@ const Webview = ({navigation, route}: TProps) => {
           : ''
       }`,
     );
+
+    setWebviewUrl(
+      `${FRONTEND_URL}${urlPath ?? '/webview'}?token=${usedToken}${
+        goToAbsolutePath
+          ? `&absolutePath=${encodeURIComponent(goToAbsolutePath)}`
+          : ''
+      }`,
+    );
   }, [urlPath, usedToken, goToAbsolutePath]);
+
+  useEffect(() => {
+    const callback = ({url}: {url: string}) => {
+      const deeplinkPath = getDeeplinkPath(url.split('talk-ink://')[1]);
+      setWebviewUrl(
+        `${FRONTEND_URL}${urlPath ?? '/webview'}?token=${usedToken}${
+          deeplinkPath
+            ? `&absolutePath=${encodeURIComponent(deeplinkPath)}`
+            : ''
+        }`,
+      );
+    };
+    Linking.addEventListener('url', callback);
+    return () => {
+      Linking.removeAllListeners('url');
+    };
+  }, []);
 
   return (
     <Layout>
@@ -89,11 +118,7 @@ const Webview = ({navigation, route}: TProps) => {
           setCanGoBack(e.nativeEvent.canGoBack);
         }}
         source={{
-          uri: `${FRONTEND_URL}${urlPath ?? '/webview'}?token=${usedToken}${
-            goToAbsolutePath
-              ? `&absolutePath=${encodeURIComponent(goToAbsolutePath)}`
-              : ''
-          }`,
+          uri: webviewUrl ? webviewUrl : undefined,
         }}
         domStorageEnabled
         onMessage={onMessageHandler}
