@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "talkinkmobile.app"
-               BlueprintName = "talkinkmobile"
-               ReferencedContainer = "container:talkinkmobile.xcodeproj">
+               BuildableName = "Talkink.app"
+               BlueprintName = "Talkink"
+               ReferencedContainer = "container:Talkink.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "talkinkmobileTests.xctest"
-               BlueprintName = "talkinkmobileTests"
-               ReferencedContainer = "container:talkinkmobile.xcodeproj">
+               BuildableName = "TalkinkTests.xctest"
+               BlueprintName = "TalkinkTests"
+               ReferencedContainer = "container:Talkink.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "talkinkmobile.app"
-            BlueprintName = "talkinkmobile"
-            ReferencedContainer = "container:talkinkmobile.xcodeproj">
+            BuildableName = "Talkink.app"
+            BlueprintName = "Talkink"
+            ReferencedContainer = "container:Talkink.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "talkinkmobile.app"
-            BlueprintName = "talkinkmobile"
-            ReferencedContainer = "container:talkinkmobile.xcodeproj">
+            BuildableName = "Talkink.app"
+            BlueprintName = "Talkink"
+            ReferencedContainer = "container:Talkink.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
