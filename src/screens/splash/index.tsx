@@ -65,7 +65,7 @@ const Splash = () => {
     } catch (error) {
       console.log('err', error);
     } finally {
-      // dispatch(setAuthLoading(false));
+      dispatch(setAuthLoading(false));
     }
   };
 
