@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {Linking, Text, View} from 'react-native';
+import {Linking, Text, ToastAndroid, View} from 'react-native';
 import type {StackScreenProps} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFormik} from 'formik';
@@ -53,8 +53,9 @@ const LoginPage = ({navigation}: TProps) => {
         urlPath: '/webview',
         absolutePath: auth.deeplink !== '/webview' ? auth.deeplink : undefined,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log('err', error);
+      ToastAndroid.show(`${error?.message}`, ToastAndroid.SHORT);
     } finally {
       setApiLoading(false);
     }

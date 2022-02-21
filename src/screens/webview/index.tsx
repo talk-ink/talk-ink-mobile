@@ -1,6 +1,12 @@
 import React, {useState, useEffect, useRef, useMemo} from 'react';
 
-import {BackHandler, Image, Linking} from 'react-native';
+import {
+  ActivityIndicator,
+  BackHandler,
+  Image,
+  Linking,
+  Dimensions,
+} from 'react-native';
 import {WebView, WebViewMessageEvent} from 'react-native-webview';
 
 import {StackActions} from '@react-navigation/routers';
@@ -16,6 +22,14 @@ import {setAuthToken, setDeeplink} from '@/store/features/auth';
 import OneSignal from 'react-native-onesignal';
 import {getDeeplinkPath} from '@/utils/helper';
 
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import colors from '@/utils/themes/colors';
+
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 type TProps = StackScreenProps<RootStackParamList, 'Webview'>;
 
 const Webview = ({navigation, route}: TProps) => {
@@ -24,6 +38,8 @@ const Webview = ({navigation, route}: TProps) => {
 
   const [canGoBack, setCanGoBack] = useState(true);
   const [webviewUrl, setWebviewUrl] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+
   const auth = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
@@ -107,6 +123,8 @@ const Webview = ({navigation, route}: TProps) => {
     Linking.addEventListener('url', callback);
     return () => {
       Linking.removeAllListeners('url');
+      setWebviewUrl('');
+      setLoading(true);
     };
   }, []);
 
@@ -122,7 +140,19 @@ const Webview = ({navigation, route}: TProps) => {
         }}
         domStorageEnabled
         onMessage={onMessageHandler}
+        onLoad={() => setLoading(false)}
       />
+      {loading && (
+        <ActivityIndicator
+          style={{
+            position: 'absolute',
+            top: height / 2,
+            left: width / 2,
+          }}
+          size="large"
+          color={colors.primary}
+        />
+      )}
     </Layout>
   );
 };

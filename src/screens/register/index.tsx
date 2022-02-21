@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {Text, View} from 'react-native';
+import {Text, ToastAndroid, View} from 'react-native';
 import type {StackScreenProps} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFormik} from 'formik';
@@ -46,8 +46,9 @@ const RegisterPage = ({navigation}: TProps) => {
       dispatch(setAuthToken({token}));
       dispatch(setAuthUser(user));
       navigation.replace('Webview', {token, urlPath: '/webview'});
-    } catch (error) {
+    } catch (error: any) {
       console.log('err', error);
+      ToastAndroid.show(`${error?.message}`, ToastAndroid.SHORT);
     } finally {
       setApiLoading(false);
     }
