@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
 
-import {TailwindProvider} from 'tailwind-rn';
 import OneSignal from 'react-native-onesignal';
 
-import utilities from '../tailwind.json';
 import codePush from 'react-native-code-push';
 import {Provider} from 'react-redux';
 import NavigationsRoot from '@/navigations/root';
