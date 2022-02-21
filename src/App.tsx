@@ -15,11 +15,9 @@ const App = () => {
     OneSignal.setAppId(ONE_SIGNAL_ID);
   }, []);
   return (
-    <TailwindProvider utilities={utilities}>
-      <Provider store={store}>
-        <NavigationsRoot />
-      </Provider>
-    </TailwindProvider>
+    <Provider store={store}>
+      <NavigationsRoot />
+    </Provider>
   );
 };
 

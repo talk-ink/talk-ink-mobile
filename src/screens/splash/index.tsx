@@ -1,16 +1,16 @@
 import images from '@/assets/images';
 import {useAppDispatch} from '@/hooks/useAppDispatch';
 import {setAuthLoading, setAuthToken, setDeeplink} from '@/store/features/auth';
-import {AppConfig} from '@/types';
 import {getAuthToken} from '@/utils/auth';
-import {axiosClient} from '@/utils/customClient';
 import React, {useEffect, useState} from 'react';
 
 import {Image, Linking, Text, View} from 'react-native';
-import codePush from 'react-native-code-push';
 import {FRONTEND_URL} from 'react-native-dotenv';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTailwind} from 'tailwind-rn/dist';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 const useMount = (func: () => any) => useEffect(() => func(), []);
 
@@ -37,7 +37,6 @@ const useInitialURL = () => {
 };
 
 const Splash = () => {
-  const tailwind = useTailwind();
   const dispatch = useAppDispatch();
   const {url: initialUrl, processing}: {url: string; processing: boolean} =
     useInitialURL();
@@ -66,7 +65,7 @@ const Splash = () => {
     } catch (error) {
       console.log('err', error);
     } finally {
-      dispatch(setAuthLoading(false));
+      // dispatch(setAuthLoading(false));
     }
   };
 
@@ -77,11 +76,16 @@ const Splash = () => {
   }, [processing]);
 
   return (
-    <SafeAreaView>
-      <View style={tailwind('h-full bg-white items-center justify-center')}>
+    <SafeAreaView style={{height: hp('100%')}}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         <Image
           source={images.brand}
-          style={{...tailwind('w-6/12'), resizeMode: 'contain'}}
+          style={{width: wp('50%'), resizeMode: 'contain'}}
         />
       </View>
     </SafeAreaView>
