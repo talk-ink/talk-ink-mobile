@@ -92,6 +92,7 @@ const RegisterPage = ({navigation}: TProps) => {
             onChangeText={formik.handleChange('email')}
             onBlur={formik.handleBlur('email')}
             placeholder="Enter your email"
+            autoCapitalize="none"
           />
           {formik.errors.email && formik.touched.email && (
             <FormError>{formik.errors.email}</FormError>
