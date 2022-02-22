@@ -5,6 +5,7 @@ export interface Token {
 export interface AuthState extends Token {
   user: User | null;
   loading: boolean;
+  deeplink?: string;
 }
 
 export interface ISubComment {
@@ -103,6 +104,7 @@ export interface Login {
 }
 
 export interface Register {
+  _id?: string;
   firstName: string;
   email: string;
   password: string;
@@ -150,3 +152,9 @@ export type PageStatus =
   | 'channel-notFound'
   | null
   | undefined;
+
+export type AppConfig = {
+  enableCheckPlaystore: boolean;
+  playstoreLink: string;
+  maintenance: boolean;
+};

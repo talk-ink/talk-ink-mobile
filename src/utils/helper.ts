@@ -1,7 +1,8 @@
-import {SendEmail, Thread, User} from '@customTypes/index';
+import {SendEmail, Thread, User} from '@/types/index';
 import axios, {AxiosResponse} from 'axios';
 //@ts-ignore
 import FileResizer from 'react-image-file-resizer';
+import {FRONTEND_URL} from 'react-native-dotenv';
 
 const EMAIL_API: string = process.env.REACT_APP_EMAIL_API ?? '';
 
@@ -260,4 +261,14 @@ export const filterDistinct = (array: any[], key: string) => {
 export const createUniqueArray = (array: string[]): string[] => {
   const unique = new Set([...array]);
   return [...unique];
+};
+
+export const getDeeplinkPath = (string: string): string => {
+  const isLocalhost: boolean = !string.split('http://localhost:3000')?.[0];
+  let manipulateUrl: string = string;
+
+  if (isLocalhost) {
+    manipulateUrl = string.replace('http://localhost:3000', FRONTEND_URL);
+  }
+  return manipulateUrl.split(FRONTEND_URL)[1];
 };

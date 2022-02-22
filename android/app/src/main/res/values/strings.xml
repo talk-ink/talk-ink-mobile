@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">talkinkmobile</string>
+    <string name="app_name">Talk ink</string>
     <string moduleConfig="true" name="CodePushDeploymentKey">NW_4fF5nOPqVthg4ppGdQq4DdckwCh-I2vkMQ</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string name="onesignal_notification_accent_color">FF6F6CD9</string>
 </resources>
